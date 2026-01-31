@@ -32,7 +32,7 @@ class ReportController extends Controller
         $stats = [
             'total' => (clone $query)->count(),
             'resolved' => (clone $query)->where('status', 'resolved')->count(),
-            'pending' => (clone $query)->whereIn('status', ['open', 'in_progress'])->count(),
+            'pending' => (clone $query)->where('status', 'open')->count(),
             'avg_resolution_time' => $this->calculateAvgResolutionTime(clone $query),
         ];
 

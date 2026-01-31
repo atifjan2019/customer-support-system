@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, FileText, Bell, LogOut, Building, History, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, Bell, LogOut, Building, History, TrendingUp, Menu, X } from 'lucide-react';
 
 export default function Layout() {
     const { user, logout } = useAuth();
@@ -11,57 +12,67 @@ export default function Layout() {
         return user?.permissions?.includes(perm);
     };
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     return (
         <div className="dashboard-layout">
-            <aside className="sidebar">
-                <div style={{ paddingBottom: '2rem', borderBottom: '1px solid var(--border)', marginBottom: '1.5rem' }}>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--primary)' }}>ISP Connect</h2>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>{user?.role?.replace('_', ' ')}</p>
+            {/* Mobile Header */}
+            <header className="mobile-header" style={{
+                display: 'none',
+                padding: '1rem',
+                backgroundColor: '#000',
+                color: 'white',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                position: 'sticky',
+                top: 0,
+                zIndex: 1100,
+                borderBottom: '1px solid #333'
+            }}>
+                <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </header>
+
+            <aside className={`sidebar ${isMenuOpen ? 'mobile-visible' : 'mobile-hidden'}`}>
+                <div style={{ paddingBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
+                        {isMenuOpen && <X size={20} style={{ cursor: 'pointer' }} onClick={() => setIsMenuOpen(false)} />}
+                    </div>
+                    <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '0.5rem' }}>{user?.role?.replace('_', ' ')}</p>
                 </div>
 
                 <nav style={{ flex: 1 }}>
-                    {hasPermission('dashboard.view') && (
-                        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <LayoutDashboard /> Dashboard
+                    {[
+                        { to: "/", icon: <LayoutDashboard />, label: "Dashboard", perm: "dashboard.view" },
+                        { to: "/leads", icon: <FileText />, label: "Leads & Complaints", perm: "leads.view" },
+                        { to: "/companies", icon: <Building />, label: "Companies", perm: "companies.manage" },
+                        { to: "/users", icon: <Users />, label: "Users", perm: "users.manage" },
+                        { to: "/logs", icon: <History />, label: "Activity Logs", perm: "logs.view" },
+                        { to: "/reports", icon: <TrendingUp size={20} />, label: "Reports", perm: "reports.view" },
+                    ].map(item => hasPermission(item.perm) && (
+                        <NavLink
+                            key={item.to}
+                            to={item.to}
+                            onClick={() => setIsMenuOpen(false)}
+                            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                        >
+                            {item.icon} {item.label}
                         </NavLink>
-                    )}
+                    ))}
 
-                    {hasPermission('leads.view') && (
-                        <NavLink to="/leads" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <FileText /> Leads & Complaints
-                        </NavLink>
-                    )}
-
-                    {hasPermission('companies.manage') && (
-                        <NavLink to="/companies" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <Building /> Companies
-                        </NavLink>
-                    )}
-
-                    {hasPermission('users.manage') && (
-                        <NavLink to="/users" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <Users /> Users
-                        </NavLink>
-                    )}
-
-                    {hasPermission('logs.view') && (
-                        <NavLink to="/logs" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <History /> Activity Logs
-                        </NavLink>
-                    )}
-
-                    {hasPermission('reports.view') && (
-                        <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-                            <TrendingUp size={20} /> Reports
-                        </NavLink>
-                    )}
-
-                    <NavLink to="/notifications" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+                    <NavLink
+                        to="/notifications"
+                        onClick={() => setIsMenuOpen(false)}
+                        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    >
                         <Bell /> Notifications
                     </NavLink>
                 </nav>
 
-                <button onClick={logout} className="nav-link" style={{ marginTop: 'auto', background: 'none', border: 'none', width: '100%', cursor: 'pointer' }}>
+                <button onClick={logout} className="nav-link" style={{ marginTop: 'auto', background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
                     <LogOut /> Sign Out
                 </button>
             </aside>

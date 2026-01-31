@@ -79,7 +79,7 @@ class LeadController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:open,in_progress,resolved',
+            'status' => 'required|in:open,resolved',
             'notes' => 'nullable|string'
         ]);
         

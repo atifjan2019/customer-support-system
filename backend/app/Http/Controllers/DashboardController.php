@@ -24,7 +24,7 @@ class DashboardController extends Controller
         // Stats clones
         $totalLeads = (clone $query)->count();
         $openComplaints = (clone $query)->where('lead_type', 'complaint')
-            ->whereIn('status', ['open', 'in_progress'])->count();
+            ->where('status', 'open')->count();
         $resolvedToday = (clone $query)->whereDate('resolved_at', today())->count();
         $pendingRequests = (clone $query)->where('lead_type', 'new_connection')
             ->where('status', 'open')->count();

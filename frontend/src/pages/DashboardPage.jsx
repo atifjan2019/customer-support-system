@@ -35,10 +35,10 @@ export default function DashboardPage() {
                 </div>
             </div>
 
-            <div className="card">
-                <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Recent Activity</h2>
+            <div className="card table-responsive" style={{ padding: 0 }}>
+                <h2 style={{ fontSize: '1.25rem', padding: '1.5rem', marginBottom: 0 }}>Recent Activity</h2>
                 {stats.recent_activity.length === 0 ? (
-                    <p className="text-muted">No recent activity to show.</p>
+                    <p className="text-muted" style={{ padding: '1.5rem' }}>No recent activity to show.</p>
                 ) : (
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <thead>
@@ -55,9 +55,7 @@ export default function DashboardPage() {
                                     <td style={{ padding: '1rem', fontWeight: 600 }}>{lead.customer_name}</td>
                                     <td style={{ padding: '1rem', textTransform: 'capitalize' }}>{lead.lead_type.replace('_', ' ')}</td>
                                     <td style={{ padding: '1rem' }}>
-                                        <span className={`badge ${lead.status === 'open' ? 'badge-open' :
-                                            lead.status === 'in_progress' ? 'badge-pending' : 'badge-open'
-                                            }`} style={{ textTransform: 'capitalize' }}>
+                                        <span className={`badge ${lead.status === 'resolved' ? 'badge-open' : 'badge-open'}`} style={{ textTransform: 'capitalize', backgroundColor: lead.status === 'resolved' ? 'var(--success)' : '', color: lead.status === 'resolved' ? 'white' : '' }}>
                                             {lead.status.replace('_', ' ')}
                                         </span>
                                     </td>

@@ -210,6 +210,10 @@ textarea {
     flex-direction: column;
   }
 
+  .mobile-header {
+    display: flex !important;
+  }
+
   .sidebar {
     width: 100%;
     height: auto;
@@ -266,8 +270,42 @@ textarea {
   }
 
   /* Table responsiveness */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+  }
+
   table {
-    min-width: 600px;
+    min-width: 700px;
+  }
+
+  /* Hamburger Menu Support */
+  .sidebar.mobile-hidden {
+    display: none;
+  }
+
+  .sidebar.mobile-visible {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    height: 100vh;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .sidebar.mobile-visible nav {
+    flex-direction: column;
+  }
+
+  .sidebar.mobile-visible .nav-link {
+    font-size: 1rem;
+    padding: 1rem;
   }
 }
 

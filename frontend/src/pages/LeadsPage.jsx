@@ -107,7 +107,6 @@ export default function LeadsPage() {
     const getStatusColor = (status) => {
         switch (status) {
             case 'open': return 'badge-open';
-            case 'in_progress': return 'badge-pending';
             case 'resolved': return 'badge-open';
             default: return '';
         }
@@ -116,7 +115,6 @@ export default function LeadsPage() {
     const getRowColor = (status) => {
         switch (status) {
             case 'resolved': return '#f0fdf4';
-            case 'in_progress': return '#fefce8';
             case 'open': return '#fef2f2';
             default: return 'transparent';
         }
@@ -177,12 +175,13 @@ export default function LeadsPage() {
                 </div>
                 <select className="form-control" style={{ width: '200px' }} value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                     <option value="">All Status</option>
-                    <option value="open">Open</option><option value="in_progress">In Progress</option><option value="resolved">Resolved</option>
+                    <option value="open">Open</option>
+                    <option value="resolved">Resolved</option>
                 </select>
             </div>
 
             {/* Table */}
-            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="card table-responsive" style={{ padding: 0 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
@@ -291,9 +290,16 @@ export default function LeadsPage() {
                             <h3 style={{ margin: 0 }}>Manage Lead</h3>
                             <X style={{ cursor: 'pointer' }} onClick={() => setManageModalLead(null)} />
                         </div>
-                        <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: 'var(--radius)' }}>
-                            <div style={{ fontWeight: 600 }}>{manageModalLead.customer_name}</div>
-                            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>{manageModalLead.lead_type.replace('_', ' ').toUpperCase()} - {manageModalLead.status}</div>
+                        <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+                            <div style={{ fontWeight: 600, fontSize: '1.1rem', marginBottom: '0.5rem' }}>{manageModalLead.customer_name}</div>
+                            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Phone size={14} /> {manageModalLead.phone}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Building size={14} /> {manageModalLead.address}</div>
+                                <div style={{ marginTop: '0.5rem' }}>
+                                    <span className={`badge ${getStatusColor(manageModalLead.status)}`}>{manageModalLead.status.toUpperCase()}</span>
+                                    <span style={{ marginLeft: '0.5rem' }}>{manageModalLead.lead_type.replace('_', ' ').toUpperCase()}</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="form-group">
                             <label className="form-label">Notes</label>
@@ -311,7 +317,7 @@ export default function LeadsPage() {
                                     <button className="btn btn-primary btn-block" onClick={() => handleManageUpdate('resolved')}>
                                         {updateStatusMutation.isPending ? 'Updating...' : 'Add Note & Resolve'}
                                     </button>
-                                    <button className="btn btn-block" style={{ backgroundColor: '#f59e0b', color: 'white' }} onClick={() => handleManageUpdate('in_progress')}>
+                                    <button className="btn btn-block" style={{ backgroundColor: '#f1f5f9', border: '1px solid var(--border)', color: 'var(--text-main)' }} onClick={() => handleManageUpdate(manageModalLead.status)}>
                                         {updateStatusMutation.isPending ? 'Updating...' : 'Update Note Only'}
                                     </button>
                                 </>
