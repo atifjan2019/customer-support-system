@@ -14,6 +14,12 @@ export default function Layout() {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const handleLogout = () => {
+        if (window.confirm('Are you sure you want to sign out?')) {
+            logout();
+        }
+    };
+
     return (
         <div className="dashboard-layout">
             {/* Mobile Header */}
@@ -33,7 +39,7 @@ export default function Layout() {
                     {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
                 <h2 style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0, textAlign: 'center' }}>ISP Connect</h2>
-                <button onClick={logout} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', justifySelf: 'end' }}>
+                <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', justifySelf: 'end' }}>
                     <LogOut size={20} />
                 </button>
             </header>
@@ -75,7 +81,7 @@ export default function Layout() {
                     </NavLink>
                 </nav>
 
-                <button onClick={logout} className="nav-link" style={{ marginTop: 'auto', background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
+                <button onClick={handleLogout} className="nav-link" style={{ marginTop: 'auto', background: 'none', border: 'none', width: '100%', cursor: 'pointer', textAlign: 'left' }}>
                     <LogOut /> Sign Out
                 </button>
             </aside>
