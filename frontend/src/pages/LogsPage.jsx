@@ -9,12 +9,7 @@ export default function LogsPage() {
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
 
-    // Auto-select first company for super admins
-    useEffect(() => {
-        if (user?.role === 'super_admin' && companies.length > 0 && !selectedCompany) {
-            setSelectedCompany(companies[0].id.toString());
-        }
-    }, [companies, user]);
+
 
     const { data: logsData, isLoading } = useQuery({
         queryKey: ['activity_logs', selectedDate, selectedCompany],
@@ -37,6 +32,13 @@ export default function LogsPage() {
         },
         enabled: user?.role === 'super_admin'
     });
+
+    // Auto-select first company for super admins
+    useEffect(() => {
+        if (user?.role === 'super_admin' && companies.length > 0 && !selectedCompany) {
+            setSelectedCompany(companies[0].id.toString());
+        }
+    }, [companies, user]);
 
     if (isLoading) return <div className="text-center p-4">Loading system logs...</div>;
 
