@@ -24,15 +24,17 @@ export default function Layout() {
         <div className="dashboard-layout">
             {/* Mobile Header */}
             <header className="mobile-header" style={{
-                display: 'none',
                 padding: '0 1rem',
                 backgroundColor: '#000',
                 color: 'white',
-                gridTemplateColumns: '1fr auto 1fr',
+                display: 'flex',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 height: '60px',
-                position: 'sticky',
+                position: 'fixed',
                 top: 0,
+                left: 0,
+                right: 0,
                 zIndex: 1100,
                 borderBottom: '1px solid #333'
             }}>
@@ -62,16 +64,21 @@ export default function Layout() {
                         { to: "/users", icon: <Users />, label: "Users", perm: "users.manage" },
                         { to: "/logs", icon: <History />, label: "Activity Logs", perm: "logs.view" },
                         { to: "/reports", icon: <TrendingUp size={20} />, label: "Reports", perm: "reports.view" },
-                    ].map(item => hasPermission(item.perm) && (
-                        <NavLink
-                            key={item.to}
-                            to={item.to}
-                            onClick={() => setIsMenuOpen(false)}
-                            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                        >
-                            {item.icon} {item.label}
-                        </NavLink>
-                    ))}
+                    ].map(item => {
+                        // Special case: hide dashboard for tech_team as They don't care about it
+                        if (item.to === '/' && user?.role === 'tech_team') return null;
+
+                        return hasPermission(item.perm) && (
+                            <NavLink
+                                key={item.to}
+                                to={item.to}
+                                onClick={() => setIsMenuOpen(false)}
+                                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                            >
+                                {item.icon} {item.label}
+                            </NavLink>
+                        );
+                    })}
 
                     <NavLink
                         to="/notifications"
@@ -86,6 +93,22 @@ export default function Layout() {
                     <LogOut /> Sign Out
                 </button>
             </aside>
+
+            {isMenuOpen && (
+                <div
+                    onClick={() => setIsMenuOpen(false)}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        zIndex: 900,
+                        backdropFilter: 'blur(4px)'
+                    }}
+                />
+            )}
 
             <main className="main-content">
                 <header style={{ marginBottom: '2rem' }}>

@@ -46,7 +46,13 @@ function AppRoutes() {
           <Layout />
         </ProtectedRoute>
       }>
-        <Route index element={<PermissionGuard perm="dashboard.view"><DashboardPage /></PermissionGuard>} />
+        <Route index element={
+          user?.role === 'tech_team' ? <Navigate to="/leads" replace /> : (
+            <PermissionGuard perm="dashboard.view">
+              <DashboardPage />
+            </PermissionGuard>
+          )
+        } />
         <Route path="leads" element={<PermissionGuard perm="leads.view"><LeadsPage /></PermissionGuard>} />
 
         <Route path="companies" element={<PermissionGuard perm="companies.manage"><CompaniesPage /></PermissionGuard>} />

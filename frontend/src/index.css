@@ -218,48 +218,57 @@ textarea {
   }
 
   .sidebar {
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-    flex-direction: row;
-    overflow-x: auto;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 280px;
+    height: calc(100vh - 60px);
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: #000;
+  }
+
+  .sidebar.mobile-hidden {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.mobile-visible {
+    transform: translateX(0);
   }
 
   .sidebar div:first-child {
-    display: none;
-    /* Hide logo/role on mobile top-bar to save space */
+    display: block;
   }
 
   .sidebar nav {
     display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
     width: 100%;
   }
 
   .nav-link {
-    margin-bottom: 0;
-    padding: 0.5rem;
-    font-size: 0.8rem;
-    white-space: nowrap;
+    margin-bottom: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    white-space: normal;
   }
 
   .nav-link svg {
-    margin-right: 0.25rem;
-    width: 16px;
-    height: 16px;
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
   }
 
   .sidebar button {
-    display: none;
-    /* Hide sign out from main bar, put in menu if needed */
+    display: flex;
   }
 
   .main-content {
     padding: 1rem;
+    margin-top: 60px;
   }
 
   .card {
