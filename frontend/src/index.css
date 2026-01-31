@@ -136,6 +136,10 @@ textarea {
 }
 
 /* Dashboard Grid */
+.mobile-header {
+  display: none;
+}
+
 .dashboard-layout {
   display: flex;
   min-height: 100vh;
@@ -211,10 +215,37 @@ textarea {
   }
 
   .mobile-header {
-    display: grid !important;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex !important;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
+    background-color: #000;
+    color: white;
     height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    border-bottom: 1px solid #333;
+  }
+
+  .menu-toggle,
+  .mobile-logout {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-logo {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 0;
   }
 
   .sidebar {

@@ -23,26 +23,12 @@ export default function Layout() {
     return (
         <div className="dashboard-layout">
             {/* Mobile Header */}
-            <header className="mobile-header" style={{
-                padding: '0 1rem',
-                backgroundColor: '#000',
-                color: 'white',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                height: '60px',
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                zIndex: 1100,
-                borderBottom: '1px solid #333'
-            }}>
-                <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.5rem', justifySelf: 'start' }}>
+            <header className="mobile-header">
+                <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
-                <h2 style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0, textAlign: 'center' }}>ISP Connect</h2>
-                <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', justifySelf: 'end' }}>
+                <h2 className="mobile-logo">ISP Connect</h2>
+                <button className="mobile-logout" onClick={handleLogout}>
                     <LogOut size={20} />
                 </button>
             </header>
