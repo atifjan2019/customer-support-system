@@ -39,7 +39,7 @@ export default function Layout() {
                         <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
                         {isMenuOpen && <X size={20} style={{ cursor: 'pointer' }} onClick={() => setIsMenuOpen(false)} />}
                     </div>
-                    <p style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '0.5rem' }}>{user?.role?.replace('_', ' ')}</p>
+                    <p className="desktop-only" style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '0.5rem' }}>{user?.role?.replace('_', ' ')}</p>
                 </div>
 
                 <nav style={{ flex: 1 }}>
