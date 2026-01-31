@@ -37,36 +37,45 @@ export default function LogsPage() {
             </div>
 
             {/* Filters */}
-            <div className="card mb-4" style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
-                <div style={{ position: 'relative', flex: 1 }}>
-                    <Search style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
-                    <input
-                        type="text"
-                        placeholder="Search logs..."
-                        className="form-control"
-                        style={{ paddingLeft: '2.5rem' }}
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Calendar size={18} className="text-muted" />
-                    <input
-                        type="date"
-                        className="form-control"
-                        style={{ width: 'auto' }}
-                        value={selectedDate}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                    />
-                    {selectedDate && (
-                        <button
-                            className="btn"
-                            style={{ padding: '0.5rem', background: 'transparent', fontSize: '0.8rem' }}
-                            onClick={() => setSelectedDate('')}
-                        >
-                            Clear
-                        </button>
-                    )}
+            <div className="card mb-4" style={{ padding: '0.75rem' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
+                        <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={16} />
+                        <input
+                            type="text"
+                            placeholder="Search actions, users..."
+                            className="form-control"
+                            style={{ paddingLeft: '2.5rem', height: '42px', backgroundColor: 'rgba(255,255,255,0.03)' }}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0 0.75rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', height: '42px' }}>
+                        <Calendar size={16} className="text-muted" />
+                        <input
+                            type="date"
+                            className="form-control"
+                            style={{
+                                width: 'auto',
+                                border: 'none',
+                                background: 'transparent',
+                                padding: 0,
+                                fontSize: '0.9rem',
+                                color: 'var(--text-main)'
+                            }}
+                            value={selectedDate}
+                            onChange={(e) => setSelectedDate(e.target.value)}
+                        />
+                        {selectedDate && (
+                            <button
+                                className="btn"
+                                style={{ padding: '0.25rem', color: 'var(--danger)', marginLeft: '0.25rem' }}
+                                onClick={() => setSelectedDate('')}
+                            >
+                                <X size={14} />
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
 

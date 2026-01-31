@@ -12,6 +12,12 @@ export default function LeadsPage() {
     const [manageModalLead, setManageModalLead] = useState(null);
     const [manageNote, setManageNote] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [page, setPage] = useState(1);
+
+    // Reset page when filters change
+    useEffect(() => {
+        setPage(1);
+    }, [filterStatus, searchTerm]);
 
     // Permission Helper
     const hasPermission = (perm) => {
@@ -32,27 +38,18 @@ export default function LeadsPage() {
     });
 
     // --- QUERIES ---
-    const { data: leads = [], isLoading: isLoadingLeads } = useQuery({
-        queryKey: ['leads', filterStatus, searchTerm],
+    const { data: leadsData = { data: [], last_page: 1 }, isLoading: isLoadingLeads } = useQuery({
+        queryKey: ['leads', filterStatus, searchTerm, page],
         queryFn: async () => {
-            const params = {};
+            const params = { page };
             if (filterStatus) params.status = filterStatus;
             if (searchTerm) params.search = searchTerm;
             const { data } = await api.get('/leads', { params });
-            const leadsData = data.data || data;
-
-            return [...leadsData].sort((a, b) => {
-                if (a.status === 'resolved' && b.status !== 'resolved') return 1;
-                if (a.status !== 'resolved' && b.status === 'resolved') return -1;
-                if (a.status !== 'resolved' && b.status !== 'resolved') {
-                    const timeA = new Date(a.created_at).getTime();
-                    const timeB = new Date(b.created_at).getTime();
-                    return timeA - timeB;
-                }
-                return 0;
-            });
+            return data;
         },
     });
+
+    const leads = leadsData.data || [];
 
     const { data: companies = [] } = useQuery({
         queryKey: ['companies'],
@@ -268,6 +265,31 @@ export default function LeadsPage() {
                     </div>
                 )}
             </div>
+
+            {/* Pagination */}
+            {!isLoadingLeads && leadsData.last_page > 1 && (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1.5rem', paddingBottom: '2rem' }}>
+                    <button
+                        className="btn"
+                        disabled={page === 1}
+                        onClick={() => setPage(p => Math.max(1, p - 1))}
+                        style={{ border: '1px solid var(--border)', background: 'white' }}
+                    >
+                        Previous
+                    </button>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>
+                        Page {leadsData.current_page} of {leadsData.last_page}
+                    </span>
+                    <button
+                        className="btn"
+                        disabled={page === leadsData.last_page}
+                        onClick={() => setPage(p => p + 1)}
+                        style={{ border: '1px solid var(--border)', background: 'white' }}
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
 
             {/* CREATE MODAL */}
             {showModal && (

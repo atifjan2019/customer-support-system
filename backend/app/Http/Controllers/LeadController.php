@@ -39,7 +39,7 @@ class LeadController extends Controller
             }
         }
 
-        return response()->json($query->latest()->paginate(15));
+        return response()->json($query->latest()->paginate(10));
     }
 
     public function store(Request $request)
