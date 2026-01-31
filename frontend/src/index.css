@@ -267,6 +267,11 @@ textarea {
     overflow-x: auto;
   }
 
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
   /* Improve Mobile Typography */
   .page-header {
     margin-bottom: 1rem !important;

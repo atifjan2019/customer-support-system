@@ -16,7 +16,7 @@ export default function DashboardPage() {
 
     return (
         <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div className="dashboard-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div className="card">
                     <h3 className="text-muted" style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>Total Leads</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{stats.total_leads}</p>
