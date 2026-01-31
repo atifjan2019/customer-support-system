@@ -19,7 +19,7 @@ export default function Layout() {
             {/* Mobile Header */}
             <header className="mobile-header" style={{
                 display: 'none',
-                padding: '1rem',
+                padding: '0.75rem 1rem',
                 backgroundColor: '#000',
                 color: 'white',
                 justifyContent: 'space-between',
@@ -29,9 +29,14 @@ export default function Layout() {
                 zIndex: 1100,
                 borderBottom: '1px solid #333'
             }}>
-                <h2 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
-                <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.5rem' }}>
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                    <h2 style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
+                </div>
+                <button onClick={logout} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+                    <LogOut size={20} />
                 </button>
             </header>
 

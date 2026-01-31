@@ -293,7 +293,12 @@ export default function LeadsPage() {
                         <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
                             <div style={{ fontWeight: 600, fontSize: '1.1rem', marginBottom: '0.5rem' }}>{manageModalLead.customer_name}</div>
                             <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Phone size={14} /> {manageModalLead.phone}</div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Phone size={14} />
+                                    <a href={`tel:${manageModalLead.phone}`} style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
+                                        {manageModalLead.phone}
+                                    </a>
+                                </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><Building size={14} /> {manageModalLead.address}</div>
                                 <div style={{ marginTop: '0.5rem' }}>
                                     <span className={`badge ${getStatusColor(manageModalLead.status)}`}>{manageModalLead.status.toUpperCase()}</span>
