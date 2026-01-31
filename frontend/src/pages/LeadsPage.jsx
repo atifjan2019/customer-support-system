@@ -189,8 +189,8 @@ export default function LeadsPage() {
                 </select>
             </div>
 
-            {/* Table */}
-            <div className="card table-responsive" style={{ padding: 0 }}>
+            {/* Desktop Table View */}
+            <div className="card table-responsive desktop-only" style={{ padding: 0 }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
@@ -239,6 +239,34 @@ export default function LeadsPage() {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Grid View */}
+            <div className="mobile-only">
+                {isLoadingLeads ? (
+                    <div className="text-center p-4">Loading leads...</div>
+                ) : leads.length === 0 ? (
+                    <div className="text-center p-4">No leads found.</div>
+                ) : (
+                    <div className="leads-mobile-grid">
+                        {leads.map(lead => (
+                            <div key={lead.id} className="lead-card" onClick={() => { if (hasPermission('leads.manage')) { setManageModalLead(lead); setManageNote(lead.notes || ''); } }}>
+                                <div>
+                                    <div className="lead-card-type" style={{ color: lead.lead_type === 'complaint' ? 'var(--danger)' : 'var(--success)' }}>
+                                        {lead.lead_type.replace('_', ' ')}
+                                    </div>
+                                    <div className="lead-card-name">{lead.customer_name}</div>
+                                </div>
+                                <div className="lead-card-footer">
+                                    <div className="lead-card-time">
+                                        {new Date(lead.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).replace(/ /g, '/')}
+                                    </div>
+                                    <div className="lead-card-status-dot" style={{ backgroundColor: lead.status === 'resolved' ? 'var(--success)' : 'var(--warning)' }}></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* CREATE MODAL */}

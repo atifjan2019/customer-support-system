@@ -35,7 +35,8 @@ export default function DashboardPage() {
                 </div>
             </div>
 
-            <div className="card table-responsive" style={{ padding: 0 }}>
+            {/* Desktop View */}
+            <div className="card table-responsive desktop-only" style={{ padding: 0 }}>
                 <h2 style={{ fontSize: '1.25rem', padding: '1.5rem', marginBottom: 0 }}>Recent Activity</h2>
                 {stats.recent_activity.length === 0 ? (
                     <p className="text-muted" style={{ padding: '1.5rem' }}>No recent activity to show.</p>
@@ -66,6 +67,33 @@ export default function DashboardPage() {
                             ))}
                         </tbody>
                     </table>
+                )}
+            </div>
+
+            {/* Mobile View */}
+            <div className="mobile-only">
+                <h2 style={{ fontSize: '1.1rem', marginBottom: '1rem', fontWeight: 'bold' }}>Recent Activity</h2>
+                {stats.recent_activity.length === 0 ? (
+                    <p className="text-muted">No recent activity to show.</p>
+                ) : (
+                    <div className="leads-mobile-grid">
+                        {stats.recent_activity.map(lead => (
+                            <div key={lead.id} className="lead-card">
+                                <div>
+                                    <div className="lead-card-type" style={{ color: lead.lead_type === 'complaint' ? 'var(--danger)' : 'var(--success)' }}>
+                                        {lead.lead_type.replace('_', ' ')}
+                                    </div>
+                                    <div className="lead-card-name">{lead.customer_name}</div>
+                                </div>
+                                <div className="lead-card-footer">
+                                    <div className="lead-card-time">
+                                        {new Date(lead.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).replace(/ /g, '/')}
+                                    </div>
+                                    <div className="lead-card-status-dot" style={{ backgroundColor: lead.status === 'resolved' ? 'var(--success)' : 'var(--warning)' }}></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 )}
             </div>
         </div>

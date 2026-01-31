@@ -310,6 +310,87 @@ textarea {
     font-size: 1rem;
     padding: 1rem;
   }
+
+  /* Grid Layout for Mobile Leads */
+  .leads-mobile-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+
+  .lead-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.1s;
+    cursor: pointer;
+  }
+
+  .lead-card:active {
+    transform: scale(0.98);
+  }
+
+  .lead-card-type {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .lead-card-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .lead-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .lead-card-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .lead-card-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
 }
 
 /* Print Styles for Report Export */
