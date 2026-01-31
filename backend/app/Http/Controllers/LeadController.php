@@ -29,11 +29,6 @@ class LeadController extends Controller
             if ($user->company_id) {
                 $query->where('company_id', $user->company_id);
             }
-            
-            // If tech team, further restrict to only their assigned leads
-            if ($user->role === 'tech_team') {
-                $query->where('assigned_to', $user->id);
-            }
         }
 
         return response()->json($query->latest()->paginate(15));

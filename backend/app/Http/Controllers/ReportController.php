@@ -26,9 +26,6 @@ class ReportController extends Controller
             if ($user->company_id) {
                 $query->where('company_id', $user->company_id);
             }
-            if ($user->role === 'tech_team') {
-                $query->where('assigned_to', $user->id);
-            }
         }
 
         // General Stats

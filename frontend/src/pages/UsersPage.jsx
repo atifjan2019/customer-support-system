@@ -158,6 +158,7 @@ export default function UsersPage() {
                         <tr>
                             <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>User</th>
                             <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Role</th>
+                            <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Company</th>
                             <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Permissions</th>
                             <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Status</th>
                             <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Actions</th>
@@ -188,6 +189,12 @@ export default function UsersPage() {
                                             <span style={{ padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: 600, backgroundColor: badgeStyle.bg, color: badgeStyle.color, textTransform: 'capitalize' }}>
                                                 {user.role.replace('_', ' ')}
                                             </span>
+                                        </td>
+                                        <td style={{ padding: '1rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.875rem' }}>
+                                                <Building size={14} className="text-muted" />
+                                                {user.company?.name || <span className="text-muted" style={{ fontSize: '0.75rem' }}>Direct Staff</span>}
+                                            </div>
                                         </td>
                                         <td style={{ padding: '1rem' }}>
                                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: '300px' }}>
