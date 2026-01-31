@@ -22,20 +22,18 @@ export default function Layout() {
                 padding: '0.75rem 1rem',
                 backgroundColor: '#000',
                 color: 'white',
-                justifyContent: 'space-between',
+                gridTemplateColumns: '1fr auto 1fr',
                 alignItems: 'center',
                 position: 'sticky',
                 top: 0,
                 zIndex: 1100,
                 borderBottom: '1px solid #333'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.5rem' }}>
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                    <h2 style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
-                </div>
-                <button onClick={logout} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' }}>
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '0.5rem', justifySelf: 'start' }}>
+                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+                <h2 style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0, textAlign: 'center' }}>ISP Connect</h2>
+                <button onClick={logout} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', justifySelf: 'end' }}>
                     <LogOut size={20} />
                 </button>
             </header>
