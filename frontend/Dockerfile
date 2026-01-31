@@ -1,9 +1,17 @@
 # Stage 1: Build
-FROM node:18-alpine as build-stage
+FROM node:20-alpine as build-stage
 WORKDIR /app
+
+# Enable high memory limit for Node.js build process
+ENV NODE_OPTIONS="--max-old-space-size=1024"
+
 COPY package*.json ./
-RUN npm install
+# Use clean install for stability
+RUN npm ci
+
 COPY . .
+
+# Run build
 RUN npm run build
 
 # Stage 2: Serve

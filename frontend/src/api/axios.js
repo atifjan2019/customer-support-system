@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    // In production, we use the subdirectory /api handled by Nginx proxy
+    // In development, we use the env variable or localhost
+    baseURL: import.meta.env.PROD
+        ? '/api'
+        : (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'),
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
