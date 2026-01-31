@@ -37,6 +37,7 @@ const PermissionGuard = ({ perm, children }) => {
 };
 
 function AppRoutes() {
+  const { user } = useAuth();
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
