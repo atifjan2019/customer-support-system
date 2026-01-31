@@ -8,6 +8,7 @@ export default function CompaniesPage() {
     const [showModal, setShowModal] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [editId, setEditId] = useState(null);
+    const [detailsModalCompany, setDetailsModalCompany] = useState(null);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -87,7 +88,8 @@ export default function CompaniesPage() {
                 </button>
             </div>
 
-            <div className="card table-responsive" style={{ padding: 0, overflow: 'hidden' }}>
+            {/* Desktop Table View */}
+            <div className="card table-responsive desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
@@ -134,6 +136,74 @@ export default function CompaniesPage() {
                     </tbody>
                 </table>
             </div>
+
+            {/* Mobile Grid View */}
+            <div className="mobile-only">
+                {isLoading ? (
+                    <div className="text-center p-4">Loading companies...</div>
+                ) : companies.length === 0 ? (
+                    <div className="text-center p-4">No companies found.</div>
+                ) : (
+                    <div className="leads-mobile-grid">
+                        {companies.map(company => (
+                            <div key={company.id} className="lead-card" onClick={() => setDetailsModalCompany(company)}>
+                                <div>
+                                    <div className="lead-card-type" style={{ color: 'var(--primary)' }}>
+                                        <Building size={14} style={{ display: 'inline', marginRight: '4px' }} />
+                                        Company
+                                    </div>
+                                    <div className="lead-card-name">{company.name}</div>
+                                </div>
+                                <div className="lead-card-footer">
+                                    <div className="lead-card-time">{company.phone || 'No Phone'}</div>
+                                    <div className="lead-card-status-dot" style={{ backgroundColor: 'var(--primary)' }}></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* DETAILS MODAL */}
+            {detailsModalCompany && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+                    <div className="card" style={{ width: '500px', padding: '2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                            <h3 style={{ margin: 0 }}>Company Details</h3>
+                            <X style={{ cursor: 'pointer' }} onClick={() => setDetailsModalCompany(null)} />
+                        </div>
+                        <div style={{ marginBottom: '1.5rem', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+                            <div style={{ fontWeight: 600, fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Building size={20} /> {detailsModalCompany.name}
+                            </div>
+                            <div style={{ fontSize: '0.9rem', color: 'var(--text-main)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Mail size={16} className="text-muted" />
+                                    <span>{detailsModalCompany.email || 'No email provided'}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Phone size={16} className="text-muted" />
+                                    <a href={`tel:${detailsModalCompany.phone}`} style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 600 }}>
+                                        {detailsModalCompany.phone || 'No phone provided'}
+                                    </a>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
+                                    <MapPin size={16} className="text-muted" style={{ marginTop: '2px' }} />
+                                    <span>{detailsModalCompany.address || 'No address provided'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <button className="btn btn-primary btn-block" onClick={() => { setDetailsModalCompany(null); openEdit(detailsModalCompany); }}>
+                                Edit Company
+                            </button>
+                            <button className="btn btn-block" style={{ backgroundColor: 'white', border: '1px solid var(--border)', color: 'var(--danger)' }} onClick={() => { setDetailsModalCompany(null); handleDelete(detailsModalCompany.id); }}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showModal && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>

@@ -133,7 +133,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Top Stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
                 <div className="card text-center" style={{ borderTop: '4px solid var(--primary)' }}>
                     <TrendingUp size={24} color="var(--primary)" style={{ marginBottom: '0.5rem', marginInline: 'auto' }} />
                     <div style={{ fontSize: '1.75rem', fontWeight: 'bold' }}>{reportData?.stats?.total || 0}</div>
@@ -152,7 +152,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Charts Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
                 <div className="card">
                     <h3 style={{ fontSize: '1.1rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <TrendingUp size={18} color="var(--primary)" /> Growth Trend

@@ -48,7 +48,8 @@ export default function LogsPage() {
                 </div>
             </div>
 
-            <div className="card table-responsive" style={{ padding: 0, overflow: 'hidden' }}>
+            {/* Desktop View */}
+            <div className="card table-responsive desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
@@ -92,6 +93,40 @@ export default function LogsPage() {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile View */}
+            <div className="mobile-only">
+                {filteredLogs.length === 0 ? (
+                    <div className="text-center p-4">No activity logs found.</div>
+                ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {filteredLogs.map(log => (
+                            <div key={log.id} className="card" style={{ padding: '1rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                        <Activity size={16} color="var(--primary)" />
+                                        <span style={{ fontWeight: 600 }}>{log.action}</span>
+                                    </div>
+                                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                                        {new Date(log.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).replace(/ /g, '/')}
+                                    </div>
+                                </div>
+                                <div style={{ fontSize: '0.9rem', marginBottom: '0.75rem' }}>{log.description}</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '0.75rem', fontSize: '0.8rem' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                        <User size={12} className="text-muted" />
+                                        {log.user?.name || 'Unknown'}
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--text-muted)' }}>
+                                        <Calendar size={12} />
+                                        {new Date(log.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

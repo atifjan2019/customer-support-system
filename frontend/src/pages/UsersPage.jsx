@@ -20,6 +20,7 @@ export default function UsersPage() {
     const [showModal, setShowModal] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [editId, setEditId] = useState(null);
+    const [detailsModalUser, setDetailsModalUser] = useState(null);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -152,7 +153,8 @@ export default function UsersPage() {
                 </button>
             </div>
 
-            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            {/* Desktop Table View */}
+            <div className="card table-responsive desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
@@ -233,6 +235,91 @@ export default function UsersPage() {
                     </tbody>
                 </table>
             </div>
+
+            {/* Mobile Grid View */}
+            <div className="mobile-only">
+                {loading ? (
+                    <div className="text-center p-4">Loading users...</div>
+                ) : users.length === 0 ? (
+                    <div className="text-center p-4">No users found.</div>
+                ) : (
+                    <div className="leads-mobile-grid">
+                        {users.map(user => {
+                            const badgeStyle = getRoleBadge(user.role);
+                            return (
+                                <div key={user.id} className="lead-card" onClick={() => setDetailsModalUser(user)}>
+                                    <div>
+                                        <div className="lead-card-type" style={{ color: badgeStyle.color }}>
+                                            {user.role.replace('_', ' ').toUpperCase()}
+                                        </div>
+                                        <div className="lead-card-name">{user.name}</div>
+                                    </div>
+                                    <div className="lead-card-footer">
+                                        <div className="lead-card-time">{user.company?.name || 'Direct Staff'}</div>
+                                        <div className="lead-card-status-dot" style={{ backgroundColor: user.is_active ? 'var(--success)' : 'var(--danger)' }}></div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+
+            {/* DETAILS MODAL */}
+            {detailsModalUser && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+                    <div className="card" style={{ width: '500px', padding: '2rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                            <h3 style={{ margin: 0 }}>User Profile</h3>
+                            <X style={{ cursor: 'pointer' }} onClick={() => setDetailsModalUser(null)} />
+                        </div>
+                        <div style={{ marginBottom: '1.5rem', padding: '1.5rem', backgroundColor: '#f8fafc', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                                <div style={{ width: '60px', height: '60px', borderRadius: '50%', backgroundColor: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+                                    {detailsModalUser.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                    <div style={{ fontWeight: 700, fontSize: '1.25rem' }}>{detailsModalUser.name}</div>
+                                    <span style={{ fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '4px', backgroundColor: getRoleBadge(detailsModalUser.role).bg, color: getRoleBadge(detailsModalUser.role).color, fontWeight: 600, textTransform: 'uppercase' }}>
+                                        {detailsModalUser.role.replace('_', ' ')}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style={{ fontSize: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Mail size={16} className="text-muted" />
+                                    <span>{detailsModalUser.email}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Phone size={16} className="text-muted" />
+                                    <span>{detailsModalUser.phone || 'No phone provided'}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Building size={16} className="text-muted" />
+                                    <span>{detailsModalUser.company?.name || 'Direct Staff'}</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                    <Shield size={16} className="text-muted" />
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                                        {detailsModalUser.role === 'super_admin' ? 'Full System Access' : detailsModalUser.permissions?.length > 0 ? detailsModalUser.permissions.join(', ') : 'No special permissions'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '1rem' }}>
+                            <button className="btn btn-primary btn-block" onClick={() => { setDetailsModalUser(null); openEdit(detailsModalUser); }}>
+                                Edit User
+                            </button>
+                            {detailsModalUser.id !== 1 && (
+                                <button className="btn btn-block" style={{ backgroundColor: 'white', border: '1px solid var(--border)', color: 'var(--danger)' }} onClick={() => { setDetailsModalUser(null); handleDelete(detailsModalUser.id); }}>
+                                    Delete User
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showModal && (
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
