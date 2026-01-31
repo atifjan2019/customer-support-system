@@ -88,11 +88,8 @@ export default function Layout() {
             </aside>
 
             <main className="main-content">
-                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                <header style={{ marginBottom: '2rem' }}>
                     <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Welcome back, {user?.name}</h1>
-                    <div className="card" style={{ padding: '0.5rem 1rem' }}>
-                        {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '/')}
-                    </div>
                 </header>
                 <Outlet />
             </main>
