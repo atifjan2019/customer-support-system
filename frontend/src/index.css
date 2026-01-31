@@ -265,11 +265,49 @@ textarea {
   .card {
     padding: 1rem;
     overflow-x: auto;
-    /* Allow tables to scroll inside cards */
+  }
+
+  /* Improve Mobile Typography */
+  .page-header {
+    margin-bottom: 1rem !important;
+    gap: 0.5rem;
+  }
+
+  .page-header div:first-child {
+    flex: 1;
+  }
+
+  .card.mb-4 {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+
+  .card.mb-4 select {
+    width: 100% !important;
   }
 
   header h1 {
-    font-size: 1.25rem;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-content header:first-child {
+    display: none !important;
+    /* Hide "Welcome Back" on mobile, redundant with sticky bar */
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  p.text-muted {
+    font-size: 0.8rem !important;
+  }
+
+  /* Compact Button for Mobile */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
   }
 
   /* Table responsiveness */
