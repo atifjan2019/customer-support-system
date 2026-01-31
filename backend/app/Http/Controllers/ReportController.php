@@ -20,6 +20,17 @@ class ReportController extends Controller
             Carbon::parse($toDate)->endOfDay()
         ]);
 
+        // Apply filters based on role and company
+        $user = auth()->user();
+        if ($user->role !== 'super_admin') {
+            if ($user->company_id) {
+                $query->where('company_id', $user->company_id);
+            }
+            if ($user->role === 'tech_team') {
+                $query->where('assigned_to', $user->id);
+            }
+        }
+
         // General Stats
         $stats = [
             'total' => (clone $query)->count(),

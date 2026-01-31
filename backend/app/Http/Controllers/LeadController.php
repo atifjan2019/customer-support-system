@@ -21,9 +21,19 @@ class LeadController extends Controller
             $query->where('lead_type', $request->lead_type);
         }
 
-        // If user is tech team, only show assigned leads
-        if (Auth::user()->role === 'tech_team') {
-            $query->where('assigned_to', Auth::id());
+        // Filtering based on role and company
+        $user = Auth::user();
+        
+        if ($user->role !== 'super_admin') {
+            // If they belong to a company, only show leads for that company
+            if ($user->company_id) {
+                $query->where('company_id', $user->company_id);
+            }
+            
+            // If tech team, further restrict to only their assigned leads
+            if ($user->role === 'tech_team') {
+                $query->where('assigned_to', $user->id);
+            }
         }
 
         return response()->json($query->latest()->paginate(15));
