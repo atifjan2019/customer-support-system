@@ -25,11 +25,12 @@ export default function Layout() {
             {/* Mobile Header */}
             <header className="mobile-header" style={{
                 display: 'none',
-                padding: '0.75rem 1rem',
+                padding: '0 1rem',
                 backgroundColor: '#000',
                 color: 'white',
                 gridTemplateColumns: '1fr auto 1fr',
                 alignItems: 'center',
+                height: '60px',
                 position: 'sticky',
                 top: 0,
                 zIndex: 1100,

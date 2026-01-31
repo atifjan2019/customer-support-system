@@ -214,6 +214,7 @@ textarea {
     display: grid !important;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    height: 60px;
   }
 
   .sidebar {
