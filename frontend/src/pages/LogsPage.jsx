@@ -46,63 +46,113 @@ export default function LogsPage() {
                 </div>
             </div>
 
-            {/* Filters */}
-            {/* Filters */}
-            <div className="card mb-4" style={{ padding: '0.75rem' }}>
-                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                    {user?.role === 'super_admin' && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: '200px' }}>
-                            <Building size={18} className="text-muted" />
-                            <select
-                                className="form-control"
-                                style={{ height: '42px', backgroundColor: 'rgba(255,255,255,0.03)' }}
-                                value={selectedCompany}
-                                onChange={(e) => setSelectedCompany(e.target.value)}
-                            >
-                                <option value="">All Companies Activity</option>
-                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                            </select>
-                        </div>
-                    )}
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: user?.role === 'super_admin' ? 0 : 1, minWidth: '200px' }}>
-                        <Calendar size={18} className="text-muted" />
-                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: 1 }}>
-                            <input
-                                type="date"
-                                className="form-control"
-                                style={{ height: '42px', backgroundColor: 'rgba(255,255,255,0.03)', paddingRight: '2.5rem' }}
-                                value={selectedDate}
-                                onChange={(e) => setSelectedDate(e.target.value)}
-                            />
-                            {selectedDate && (
-                                <button
-                                    className="btn"
-                                    style={{ position: 'absolute', right: '10px', padding: '0.25rem', color: 'var(--danger)' }}
-                                    onClick={() => setSelectedDate('')}
-                                >
-                                    <X size={16} />
-                                </button>
-                            )}
-                        </div>
+            {/* Premium Filter Bar */}
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: user?.role === 'super_admin' ? '2fr 1fr' : '1fr',
+                gap: '0.75rem',
+                marginBottom: '1.5rem'
+            }} className="mobile-stack">
+                {user?.role === 'super_admin' && (
+                    <div style={{ position: 'relative' }}>
+                        <Building size={16} style={{
+                            position: 'absolute',
+                            left: '12px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            color: 'var(--text-muted)',
+                            zIndex: 1
+                        }} />
+                        <select
+                            className="form-control"
+                            style={{
+                                height: '48px',
+                                paddingLeft: '2.5rem',
+                                borderRadius: '12px',
+                                border: '1px solid var(--border)',
+                                backgroundColor: '#fff',
+                                fontSize: '0.95rem',
+                                fontWeight: '500',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                            }}
+                            value={selectedCompany}
+                            onChange={(e) => setSelectedCompany(e.target.value)}
+                        >
+                            <option value="">Company</option>
+                            {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                        </select>
                     </div>
+                )}
+
+                <div style={{ position: 'relative' }}>
+                    <Calendar size={16} style={{
+                        position: 'absolute',
+                        left: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: 'var(--text-muted)',
+                        zIndex: 1
+                    }} />
+                    <input
+                        type="date"
+                        className="form-control"
+                        style={{
+                            height: '48px',
+                            paddingLeft: '2.5rem',
+                            borderRadius: '12px',
+                            border: '1px solid var(--border)',
+                            backgroundColor: '#fff',
+                            fontSize: '0.95rem',
+                            fontWeight: '500',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+                        }}
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                    />
+                    {selectedDate && (
+                        <button
+                            onClick={() => setSelectedDate('')}
+                            style={{
+                                position: 'absolute',
+                                right: '12px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                background: 'rgba(238, 49, 79, 0.1)',
+                                color: 'var(--primary)',
+                                border: 'none',
+                                borderRadius: '6px',
+                                padding: '4px 8px',
+                                fontSize: '0.75rem',
+                                fontWeight: 'bold',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            Clear
+                        </button>
+                    )}
                 </div>
             </div>
 
             {/* Desktop View */}
-            <div className="card table-responsive desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="card table-responsive desktop-only" style={{ padding: 0, overflow: 'hidden', borderRadius: '16px' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>
-                            <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Action</th>
-                            <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Description</th>
-                            <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Performed By</th>
-                            <th style={{ padding: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Date & Time</th>
+                            <th style={{ padding: '1.25rem 1rem', fontWeight: 600, color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Action</th>
+                            <th style={{ padding: '1.25rem 1rem', fontWeight: 600, color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Description</th>
+                            <th style={{ padding: '1.25rem 1rem', fontWeight: 600, color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Performed By</th>
+                            <th style={{ padding: '1.25rem 1rem', fontWeight: 600, color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Date & Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredLogs.length === 0 ? (
-                            <tr><td colSpan="4" className="text-center" style={{ padding: '2rem' }}>No activity logs found.</td></tr>
+                            <tr>
+                                <td colSpan="4" className="text-center" style={{ padding: '4rem 2rem' }}>
+                                    <div style={{ opacity: 0.5, marginBottom: '1rem' }}><History size={48} /></div>
+                                    <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.25rem' }}>No activity logs found</h3>
+                                    <p className="text-muted" style={{ fontSize: '0.9rem' }}>Try adjusting your filters or check back later.</p>
+                                </td>
+                            </tr>
                         ) : (
                             filteredLogs.map(log => (
                                 <tr key={log.id} style={{ borderBottom: '1px solid var(--border)' }}>
@@ -139,7 +189,11 @@ export default function LogsPage() {
             {/* Mobile View */}
             <div className="mobile-only">
                 {filteredLogs.length === 0 ? (
-                    <div className="text-center p-4">No activity logs found.</div>
+                    <div className="card text-center" style={{ padding: '4rem 2rem' }}>
+                        <div style={{ opacity: 0.3, marginBottom: '1rem' }}><History size={48} /></div>
+                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)', marginBottom: '0.25rem' }}>No logs found</h3>
+                        <p className="text-muted" style={{ fontSize: '0.85rem' }}>Try adjusting your filters.</p>
+                    </div>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         {filteredLogs.map(log => (

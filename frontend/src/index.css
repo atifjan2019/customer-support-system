@@ -214,6 +214,10 @@ textarea {
     flex-direction: column;
   }
 
+  .mobile-stack {
+    grid-template-columns: 1fr !important;
+  }
+
   .mobile-header {
     display: flex !important;
     justify-content: space-between;
