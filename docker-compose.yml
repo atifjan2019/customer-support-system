@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Laravel Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: isp-backend
+    restart: always
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-cms}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      APP_URL: https://cms.webspires.com.pk
+      APP_ENV: production
+    volumes:
+      - ./backend/storage:/var/www/storage
+    depends_on:
+      - db
+
+  # React Frontend (Changed port to 8001 to avoid conflicts)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: isp-frontend
+    restart: always
+    ports:
+      - "8001:80"
+    depends_on:
+      - backend
+
+  # MySQL Database (Changed host port to 3307 to avoid conflicts)
+  db:
+    image: mysql:8.0
+    container_name: isp-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-cms}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

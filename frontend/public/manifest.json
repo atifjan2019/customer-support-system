@@ -1,0 +1,16 @@
+{
+    "short_name": "ISP Connect",
+    "name": "ISP Connect Management System",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#EE314F",
+    "background_color": "#ffffff"
+}

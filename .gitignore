@@ -1,0 +1,18 @@
+# Root gitignore
+backend/vendor/
+backend/.env
+backend/storage/*.key
+backend/public/storage
+backend/public/hot
+backend/public/build
+frontend/node_modules/
+frontend/dist/
+mobile/node_modules/
+.env
+.DS_Store
+node_modules/
+dist/
+build/
+.agent/
+.gemini/
+*.log
