@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 
 export default function LogsPage() {
     const { user } = useAuth();
-    const [searchTerm, setSearchTerm] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
 
@@ -36,11 +35,7 @@ export default function LogsPage() {
 
     const logs = Array.isArray(logsData) ? logsData : [];
 
-    const filteredLogs = logs.filter(log =>
-        log.action.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        log.user?.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredLogs = logs; // Search removed as requested
 
     return (
         <div>
@@ -52,60 +47,44 @@ export default function LogsPage() {
             </div>
 
             {/* Filters */}
+            {/* Filters */}
             <div className="card mb-4" style={{ padding: '0.75rem' }}>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <div style={{ position: 'relative', flex: 1, minWidth: '200px' }}>
-                        <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={16} />
-                        <input
-                            type="text"
-                            placeholder="Search actions, users..."
-                            className="form-control"
-                            style={{ paddingLeft: '2.5rem', height: '42px', backgroundColor: 'rgba(255,255,255,0.03)' }}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
-
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     {user?.role === 'super_admin' && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0 0.75rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', height: '42px' }}>
-                            <Building size={16} className="text-muted" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: '200px' }}>
+                            <Building size={18} className="text-muted" />
                             <select
                                 className="form-control"
-                                style={{ border: 'none', background: 'transparent', padding: 0, fontSize: '0.9rem', width: 'auto', minWidth: '150px' }}
+                                style={{ height: '42px', backgroundColor: 'rgba(255,255,255,0.03)' }}
                                 value={selectedCompany}
                                 onChange={(e) => setSelectedCompany(e.target.value)}
                             >
-                                <option value="">All Companies</option>
+                                <option value="">All Companies Activity</option>
                                 {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                     )}
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0 0.75rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', height: '42px' }}>
-                        <Calendar size={16} className="text-muted" />
-                        <input
-                            type="date"
-                            className="form-control"
-                            style={{
-                                width: 'auto',
-                                border: 'none',
-                                background: 'transparent',
-                                padding: 0,
-                                fontSize: '0.9rem',
-                                color: 'var(--text-main)'
-                            }}
-                            value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
-                        />
-                        {selectedDate && (
-                            <button
-                                className="btn"
-                                style={{ padding: '0.25rem', color: 'var(--danger)', marginLeft: '0.25rem' }}
-                                onClick={() => setSelectedDate('')}
-                            >
-                                <X size={14} />
-                            </button>
-                        )}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: user?.role === 'super_admin' ? 0 : 1, minWidth: '200px' }}>
+                        <Calendar size={18} className="text-muted" />
+                        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', flex: 1 }}>
+                            <input
+                                type="date"
+                                className="form-control"
+                                style={{ height: '42px', backgroundColor: 'rgba(255,255,255,0.03)', paddingRight: '2.5rem' }}
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                            />
+                            {selectedDate && (
+                                <button
+                                    className="btn"
+                                    style={{ position: 'absolute', right: '10px', padding: '0.25rem', color: 'var(--danger)' }}
+                                    onClick={() => setSelectedDate('')}
+                                >
+                                    <X size={16} />
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
