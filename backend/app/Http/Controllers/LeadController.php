@@ -21,6 +21,14 @@ class LeadController extends Controller
             $query->where('lead_type', $request->lead_type);
         }
 
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('customer_name', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
         // Filtering based on role and company
         $user = Auth::user();
         

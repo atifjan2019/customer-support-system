@@ -11,6 +11,7 @@ export default function LeadsPage() {
     const [showModal, setShowModal] = useState(false);
     const [manageModalLead, setManageModalLead] = useState(null);
     const [manageNote, setManageNote] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     // Permission Helper
     const hasPermission = (perm) => {
@@ -32,10 +33,11 @@ export default function LeadsPage() {
 
     // --- QUERIES ---
     const { data: leads = [], isLoading: isLoadingLeads } = useQuery({
-        queryKey: ['leads', filterStatus],
+        queryKey: ['leads', filterStatus, searchTerm],
         queryFn: async () => {
             const params = {};
             if (filterStatus) params.status = filterStatus;
+            if (searchTerm) params.search = searchTerm;
             const { data } = await api.get('/leads', { params });
             const leadsData = data.data || data;
 
@@ -171,7 +173,14 @@ export default function LeadsPage() {
             <div className="card mb-4" style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
                 <div style={{ position: 'relative', flex: 1 }}>
                     <Search style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
-                    <input type="text" placeholder="Search customers..." className="form-control" style={{ paddingLeft: '2.5rem' }} />
+                    <input
+                        type="text"
+                        placeholder="Search name or phone..."
+                        className="form-control"
+                        style={{ paddingLeft: '2.5rem' }}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
                 <select className="form-control" style={{ width: '200px' }} value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                     <option value="">All Status</option>
@@ -205,12 +214,6 @@ export default function LeadsPage() {
                                     style={{ borderBottom: '1px solid var(--border)', backgroundColor: getRowColor(lead.status), cursor: hasPermission('leads.manage') ? 'pointer' : 'default' }}>
                                     <td style={{ padding: '1rem' }}>
                                         <div style={{ fontWeight: 600 }}>{lead.customer_name}</div>
-                                        {lead.company && <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                            <Building size={12} /> {lead.company}
-                                        </div>}
-                                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                                            <Phone size={12} /> {lead.phone}
-                                        </div>
                                     </td>
                                     <td style={{ padding: '1rem' }}>
                                         <span style={{ textTransform: 'capitalize', color: lead.lead_type === 'complaint' ? 'var(--danger)' : 'var(--success)' }}>
