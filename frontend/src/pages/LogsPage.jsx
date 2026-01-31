@@ -1,13 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/axios';
 import { History, User, Activity, Calendar, Search, Building, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function LogsPage() {
     const { user } = useAuth();
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedCompany, setSelectedCompany] = useState('');
+
+    // Auto-select first company for super admins
+    useEffect(() => {
+        if (user?.role === 'super_admin' && companies.length > 0 && !selectedCompany) {
+            setSelectedCompany(companies[0].id.toString());
+        }
+    }, [companies, user]);
 
     const { data: logsData, isLoading } = useQuery({
         queryKey: ['activity_logs', selectedDate, selectedCompany],
@@ -111,20 +118,24 @@ export default function LogsPage() {
                     />
                     {selectedDate && (
                         <button
-                            onClick={() => setSelectedDate('')}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setSelectedDate('');
+                            }}
                             style={{
                                 position: 'absolute',
-                                right: '12px',
+                                right: '40px',
                                 top: '50%',
                                 transform: 'translateY(-50%)',
-                                background: 'rgba(238, 49, 79, 0.1)',
-                                color: 'var(--primary)',
+                                background: 'var(--primary)',
+                                color: '#fff',
                                 border: 'none',
                                 borderRadius: '6px',
-                                padding: '4px 8px',
+                                padding: '4px 10px',
                                 fontSize: '0.75rem',
                                 fontWeight: 'bold',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                zIndex: 2
                             }}
                         >
                             Clear
