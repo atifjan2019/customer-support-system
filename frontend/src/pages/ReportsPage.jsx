@@ -93,7 +93,7 @@ export default function ReportsPage() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Performance Reports</h2>
                     <p className="text-muted">Analyze system efficiency and team productivity</p>

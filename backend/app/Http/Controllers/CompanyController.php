@@ -12,8 +12,16 @@ class CompanyController extends Controller
         return response()->json(Company::latest()->get());
     }
 
+    private function checkSuperAdmin()
+    {
+        if (auth()->user()->role !== 'super_admin') {
+            abort(403, 'Unauthorized action.');
+        }
+    }
+
     public function store(Request $request)
     {
+        $this->checkSuperAdmin();
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email',
@@ -32,6 +40,7 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->checkSuperAdmin();
         $company = Company::findOrFail($id);
         
         $validated = $request->validate([
@@ -47,6 +56,7 @@ class CompanyController extends Controller
 
     public function destroy($id)
     {
+        $this->checkSuperAdmin();
         Company::findOrFail($id)->delete();
         return response()->json(['message' => 'Company deleted']);
     }

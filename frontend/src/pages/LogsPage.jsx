@@ -26,7 +26,7 @@ export default function LogsPage() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Activity Logs</h2>
                     <p className="text-muted">Audit trail of all system actions</p>
@@ -48,7 +48,7 @@ export default function LogsPage() {
                 </div>
             </div>
 
-            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="card table-responsive" style={{ padding: 0, overflow: 'hidden' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>

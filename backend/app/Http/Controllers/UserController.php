@@ -12,7 +12,13 @@ class UserController extends Controller
     // List all users
     public function index(Request $request)
     {
+        $user = auth()->user();
         $query = User::with('company');
+
+        // Multi-tenancy: filter by company unless super_admin
+        if ($user->role !== 'super_admin') {
+            $query->where('company_id', $user->company_id);
+        }
 
         if ($request->has('role')) {
             $query->where('role', $request->role);

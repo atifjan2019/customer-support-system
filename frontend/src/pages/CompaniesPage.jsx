@@ -77,7 +77,7 @@ export default function CompaniesPage() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Company Management</h2>
                     <p className="text-muted">Manage your client companies</p>
@@ -87,7 +87,7 @@ export default function CompaniesPage() {
                 </button>
             </div>
 
-            <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="card table-responsive" style={{ padding: 0, overflow: 'hidden' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                     <thead style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
                         <tr>

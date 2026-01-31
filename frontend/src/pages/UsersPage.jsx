@@ -142,7 +142,7 @@ export default function UsersPage() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+            <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>User Management</h2>
                     <p className="text-muted">Manage system access and roles</p>

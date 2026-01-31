@@ -9,6 +9,15 @@ class ActivityLogController extends Controller
 {
     public function index()
     {
-        return ActivityLog::with('user')->latest()->paginate(50);
+        $user = auth()->user();
+        $query = ActivityLog::with('user');
+
+        if ($user->role !== 'super_admin') {
+            $query->whereHas('user', function($q) use ($user) {
+                $q->where('company_id', $user->company_id);
+            });
+        }
+
+        return $query->latest()->paginate(50);
     }
 }
