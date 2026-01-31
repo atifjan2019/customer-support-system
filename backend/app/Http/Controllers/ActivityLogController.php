@@ -18,6 +18,12 @@ class ActivityLogController extends Controller
             });
         }
 
+        if ($request->has('company_id') && $request->company_id) {
+            $query->whereHas('user', function($q) use ($request) {
+                $q->where('company_id', $request->company_id);
+            });
+        }
+
         if ($request->has('date')) {
             $query->whereDate('created_at', $request->date);
         }

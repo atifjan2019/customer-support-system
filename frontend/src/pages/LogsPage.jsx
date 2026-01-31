@@ -1,20 +1,35 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/axios';
-import { History, User, Activity, Calendar, Search } from 'lucide-react';
+import { History, User, Activity, Calendar, Search, Building, X } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export default function LogsPage() {
+    const { user } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
+    const [selectedCompany, setSelectedCompany] = useState('');
 
     const { data: logsData, isLoading } = useQuery({
-        queryKey: ['activity_logs', selectedDate],
+        queryKey: ['activity_logs', selectedDate, selectedCompany],
         queryFn: async () => {
             const { data } = await api.get('/logs', {
-                params: { date: selectedDate }
+                params: {
+                    date: selectedDate,
+                    company_id: selectedCompany
+                }
             });
             return data.data || data;
         },
+    });
+
+    const { data: companies = [] } = useQuery({
+        queryKey: ['companies'],
+        queryFn: async () => {
+            const { data } = await api.get('/companies');
+            return data;
+        },
+        enabled: user?.role === 'super_admin'
     });
 
     if (isLoading) return <div className="text-center p-4">Loading system logs...</div>;
@@ -50,6 +65,22 @@ export default function LogsPage() {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
+
+                    {user?.role === 'super_admin' && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0 0.75rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', height: '42px' }}>
+                            <Building size={16} className="text-muted" />
+                            <select
+                                className="form-control"
+                                style={{ border: 'none', background: 'transparent', padding: 0, fontSize: '0.9rem', width: 'auto', minWidth: '150px' }}
+                                value={selectedCompany}
+                                onChange={(e) => setSelectedCompany(e.target.value)}
+                            >
+                                <option value="">All Companies</option>
+                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                    )}
+
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'rgba(255,255,255,0.03)', padding: '0 0.75rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', height: '42px' }}>
                         <Calendar size={16} className="text-muted" />
                         <input
