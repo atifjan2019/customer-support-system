@@ -13,9 +13,11 @@ services:
       DB_DATABASE: ${DB_DATABASE:-cms}
       DB_USERNAME: ${DB_USERNAME:-root}
       DB_PASSWORD: ${DB_PASSWORD:-root}
-      APP_URL: http://cms.webspires.com.pk
+      APP_URL: https://cms.webspires.com.pk
       APP_ENV: production
-      APP_KEY: base64:fH7+Hn2x4Wz4mR+2p7B1N2k6L8V8mG+q7F1S2N3M4E5= # Default key for startup
+      APP_KEY: base64:fH7+Hn2x4Wz4mR+2p7B1N2k6L8V8mG+q7F1S2N3M4E5=
+      SESSION_DOMAIN: .webspires.com.pk
+      SANCTUM_STATEFUL_DOMAINS: cms.webspires.com.pk
     volumes:
       - ./backend/storage:/var/www/storage
       - ./backend/bootstrap/cache:/var/www/bootstrap/cache
