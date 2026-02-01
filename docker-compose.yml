@@ -32,16 +32,10 @@ services:
       dockerfile: Dockerfile
     container_name: isp-frontend
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.isp-frontend.rule=Host(`cms.webspires.com.pk`)"
-      - "traefik.http.routers.isp-frontend.entrypoints=websecure"
-      - "traefik.http.routers.isp-frontend.tls=true"
-      - "traefik.http.routers.isp-frontend.tls.certresolver=letsencrypt"
-      - "traefik.http.services.isp-frontend.loadbalancer.server.port=80"
+    ports:
+      - "80:80"
     networks:
       - app-network
-      - traefik-net
     depends_on:
       - backend
 
