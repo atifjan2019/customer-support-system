@@ -19,22 +19,33 @@ services:
       APP_ENV: production
     volumes:
       - ./backend/storage:/var/www/storage
+      - ./backend/bootstrap/cache:/var/www/bootstrap/cache
+    networks:
+      - app-network
     depends_on:
       - db
 
-  # React Frontend (Changed port to 8001 to avoid conflicts)
+  # React Frontend (Proxied via Traefik)
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: isp-frontend
     restart: always
-    ports:
-      - "8001:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.isp-frontend.rule=Host(`cms.webspires.com.pk`)"
+      - "traefik.http.routers.isp-frontend.entrypoints=websecure"
+      - "traefik.http.routers.isp-frontend.tls=true"
+      - "traefik.http.routers.isp-frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.isp-frontend.loadbalancer.server.port=80"
+    networks:
+      - app-network
+      - traefik-net
     depends_on:
       - backend
 
-  # MySQL Database (Changed host port to 3307 to avoid conflicts)
+  # MySQL Database
   db:
     image: mysql:8.0
     container_name: isp-db
@@ -46,6 +57,14 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+  traefik-net:
+    external: true
 
 volumes:
   db_data:
