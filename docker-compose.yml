@@ -32,7 +32,7 @@ services:
     container_name: isp-frontend
     restart: always
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - app-network
     depends_on:
