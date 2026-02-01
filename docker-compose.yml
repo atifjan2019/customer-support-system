@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Laravel Backend
   backend:
@@ -15,7 +13,7 @@ services:
       DB_DATABASE: ${DB_DATABASE:-cms}
       DB_USERNAME: ${DB_USERNAME:-root}
       DB_PASSWORD: ${DB_PASSWORD:-root}
-      APP_URL: https://cms.webspires.com.pk
+      APP_URL: http://cms.webspires.com.pk
       APP_ENV: production
     volumes:
       - ./backend/storage:/var/www/storage
@@ -25,7 +23,7 @@ services:
     depends_on:
       - db
 
-  # React Frontend (Proxied via Traefik)
+  # React Frontend
   frontend:
     build:
       context: ./frontend
@@ -57,8 +55,6 @@ services:
 networks:
   app-network:
     driver: bridge
-  traefik-net:
-    external: true
 
 volumes:
   db_data:
