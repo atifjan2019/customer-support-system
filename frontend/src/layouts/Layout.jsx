@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LayoutDashboard, Users, FileText, Bell, LogOut, Building, History, TrendingUp, Menu, X } from 'lucide-react';
+import LogoHorizontal from '../assets/logo-horizontal.svg';
 
 export default function Layout() {
     const { user, logout } = useAuth();
@@ -27,7 +28,7 @@ export default function Layout() {
                 <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
-                <h2 className="mobile-logo">ISP Connect</h2>
+                <img src={LogoHorizontal} alt="ISP Connect" className="mobile-logo" style={{ height: '32px', width: 'auto' }} />
                 <button className="mobile-logout" onClick={handleLogout}>
                     <LogOut size={20} />
                 </button>
@@ -36,10 +37,9 @@ export default function Layout() {
             <aside className={`sidebar ${isMenuOpen ? 'mobile-visible' : 'mobile-hidden'}`}>
                 <div style={{ paddingBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '1.5rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--primary)', margin: 0 }}>ISP Connect</h2>
+                        <img src={LogoHorizontal} alt="ISP Connect" style={{ height: '40px', width: 'auto', filter: 'brightness(0) invert(1)' }} />
                         {isMenuOpen && <X size={20} style={{ cursor: 'pointer' }} onClick={() => setIsMenuOpen(false)} />}
                     </div>
-                    <p className="desktop-only" style={{ fontSize: '0.875rem', color: '#94a3b8', marginTop: '0.5rem' }}>{user?.role?.replace('_', ' ')}</p>
                 </div>
 
                 <nav style={{ flex: 1 }}>

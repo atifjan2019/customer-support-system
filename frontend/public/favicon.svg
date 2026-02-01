@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ISP Connect">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EE314F" />
+      <stop offset="100%" stop-color="#cc1a36" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#111111" stroke-width="4" />
+  <circle cx="32" cy="24" r="5" fill="url(#accent)" />
+  <circle cx="22" cy="38" r="5" fill="#111111" />
+  <circle cx="42" cy="38" r="5" fill="#111111" />
+  <circle cx="32" cy="32" r="6" fill="url(#accent)" />
+  <line x1="32" y1="28" x2="32" y2="24" stroke="#EE314F" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="28" y1="35" x2="24" y2="37" stroke="#111111" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="36" y1="35" x2="40" y2="37" stroke="#111111" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M16 28 Q16 16 32 16 Q48 16 48 28" stroke="#EE314F" stroke-width="3" fill="none" stroke-linecap="round" />
+  <rect x="12" y="26" width="6" height="14" rx="2" fill="#111111" />
+  <rect x="46" y="26" width="6" height="14" rx="2" fill="#111111" />
+</svg>

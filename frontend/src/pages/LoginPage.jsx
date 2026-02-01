@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import LogoHorizontal from '../assets/logo-horizontal.svg';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -22,8 +23,8 @@ export default function LoginPage() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '1rem' }}>
             <div className="card" style={{ width: '100%', maxWidth: '400px' }}>
-                <div className="text-center mb-4">
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>ISP Support Portal</h1>
+                <div className="text-center mb-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <img src={LogoHorizontal} alt="ISP Connect" style={{ height: '50px', width: 'auto', marginBottom: '1rem' }} />
                     <p style={{ color: 'var(--text-muted)' }}>Sign in to your account</p>
                 </div>
 
@@ -59,10 +60,6 @@ export default function LoginPage() {
                     <button type="submit" className="btn btn-primary btn-block">
                         Sign In
                     </button>
-
-                    <div className="text-center" style={{ marginTop: '1rem', fontSize: '0.875rem' }}>
-                        use: admin@isp.com / password
-                    </div>
                 </form>
             </div>
         </div>
