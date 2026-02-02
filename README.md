@@ -20,3 +20,8 @@
 
 - `backend/`: Laravel 12 API
 - `frontend/`: React + Vite
+
+## Mobile App (NativePHP)
+
+NativePHP Mobile scaffolding is available in `backend/nativephp/`.
+See `docs/NATIVEPHP_MOBILE.md` for setup, prerequisites, and run instructions.
