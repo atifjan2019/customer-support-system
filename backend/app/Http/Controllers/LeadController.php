@@ -74,7 +74,8 @@ class LeadController extends Controller
 
     public function show($id)
     {
-        return Lead::with(['assignedAgent', 'creator', 'complaint'])->findOrFail($id);
+        $lead = Lead::with(['assignedAgent', 'creator', 'complaint'])->findOrFail($id);
+        return response()->json($lead);
     }
 
     public function update(Request $request, $id)

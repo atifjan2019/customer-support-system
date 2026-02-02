@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { API_BASE_URL } from '../config/api';
+import { API_BASE_URL, ENDPOINTS } from '../config/api';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -42,19 +42,19 @@ apiClient.interceptors.response.use(
 // Auth API
 export const authAPI = {
   login: async (email: string, password: string) => {
-    const response = await apiClient.post('/login', { email, password });
+    const response = await apiClient.post(ENDPOINTS.LOGIN, { email, password });
     return response.data;
   },
   
   logout: async () => {
-    const response = await apiClient.post('/logout');
+    const response = await apiClient.post(ENDPOINTS.LOGOUT);
     await AsyncStorage.removeItem('auth_token');
     await AsyncStorage.removeItem('user');
     return response.data;
   },
   
   getUser: async () => {
-    const response = await apiClient.get('/user');
+    const response = await apiClient.get(ENDPOINTS.USER);
     return response.data;
   },
 };
@@ -123,7 +123,7 @@ export const complaintsAPI = {
 // Dashboard API
 export const dashboardAPI = {
   getStats: async () => {
-    const response = await apiClient.get('/dashboard-stats');
+    const response = await apiClient.get(ENDPOINTS.DASHBOARD);
     return response.data;
   },
 };

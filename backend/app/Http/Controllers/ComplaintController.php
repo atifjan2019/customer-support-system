@@ -8,6 +8,22 @@ use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
 {
+    public function index(Request $request)
+    {
+        $complaints = Complaint::with('lead', 'lead.assignedAgent')
+            ->paginate(10);
+        
+        return response()->json($complaints);
+    }
+
+    public function show($id)
+    {
+        $complaint = Complaint::with('lead', 'lead.assignedAgent')
+            ->findOrFail($id);
+        
+        return response()->json($complaint);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

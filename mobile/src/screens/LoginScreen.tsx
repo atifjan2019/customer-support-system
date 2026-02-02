@@ -14,10 +14,12 @@ import {
 } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../config/theme';
 import { useAuth } from '../context/AuthContext';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAuth();
 
@@ -83,15 +85,27 @@ const LoginScreen = () => {
 
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your password"
-                placeholderTextColor={COLORS.textLight}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                editable={!isSubmitting}
-              />
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={styles.passwordInput}
+                  placeholder="Enter your password"
+                  placeholderTextColor={COLORS.textLight}
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!isPasswordVisible} // Toggle visibility
+                  editable={!isSubmitting}
+                />
+                <TouchableOpacity
+                  style={styles.eyeIcon}
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                >
+                  <Ionicons
+                    name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
+                    size={24}
+                    color={COLORS.textLight}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
 
             <TouchableOpacity
@@ -190,6 +204,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.md,
     fontSize: SIZES.fontMd,
     color: COLORS.textDark,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
+    borderRadius: SIZES.radiusMd,
+    paddingHorizontal: SIZES.md,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: SIZES.md,
+    fontSize: SIZES.fontMd,
+    color: COLORS.textDark,
+  },
+  eyeIcon: {
+    padding: 4,
   },
   button: {
     backgroundColor: COLORS.primary,

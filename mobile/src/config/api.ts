@@ -5,10 +5,10 @@ export const API_BASE_URL = 'http://127.0.0.1:8000/api'; // Physical device over
 // export const API_BASE_URL = 'http://192.168.1.100:8000/api'; // Physical device over Wi-Fi
 
 export const ENDPOINTS = {
-  LOGIN: '/login',
-  LOGOUT: '/logout',
-  USER: '/user',
+  LOGIN: '/auth/login',
+  LOGOUT: '/auth/logout',
+  USER: '/auth/me',
   LEADS: '/leads',
   COMPLAINTS: '/complaints',
-  DASHBOARD: '/dashboard-stats',
+  DASHBOARD: '/dashboard/stats',
 };

@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: SIZES.md,
+    paddingBottom: SIZES.xxl,
   },
   card: {
     backgroundColor: COLORS.card,
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     color: COLORS.textMuted,
   },
   listContent: {
-    paddingBottom: SIZES.xxl,
+    paddingBottom: SIZES.xxl + SIZES.xxl,
   },
   complaintCard: {
     backgroundColor: COLORS.card,
