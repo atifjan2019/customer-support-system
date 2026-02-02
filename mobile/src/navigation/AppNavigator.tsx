@@ -10,6 +10,10 @@ import {
   LeadsScreen,
   ComplaintsScreen,
   SettingsScreen,
+  LeadDetailScreen,
+  LeadFormScreen,
+  ComplaintDetailScreen,
+  ComplaintFormScreen,
 } from '../screens';
 
 const Stack = createNativeStackNavigator();
@@ -67,6 +71,10 @@ const AppStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Screen name="LeadDetail" component={LeadDetailScreen} />
+      <Stack.Screen name="LeadForm" component={LeadFormScreen} />
+      <Stack.Screen name="ComplaintDetail" component={ComplaintDetailScreen} />
+      <Stack.Screen name="ComplaintForm" component={ComplaintFormScreen} />
     </Stack.Navigator>
   );
 };

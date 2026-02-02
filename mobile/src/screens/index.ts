@@ -3,3 +3,7 @@ export { default as DashboardScreen } from './DashboardScreen';
 export { default as LeadsScreen } from './LeadsScreen';
 export { default as ComplaintsScreen } from './ComplaintsScreen';
 export { default as SettingsScreen } from './SettingsScreen';
+export { default as LeadDetailScreen } from './LeadDetailScreen';
+export { default as LeadFormScreen } from './LeadFormScreen';
+export { default as ComplaintDetailScreen } from './ComplaintDetailScreen';
+export { default as ComplaintFormScreen } from './ComplaintFormScreen';
