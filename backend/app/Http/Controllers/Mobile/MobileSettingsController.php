@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use App\Services\MobileSyncService;
 use Illuminate\Http\Request;
-use Native\Mobile\Facades\Network;
-use Native\Mobile\Facades\PushNotifications;
 
 class MobileSettingsController extends Controller
 {
@@ -14,10 +12,21 @@ class MobileSettingsController extends Controller
     {
         $user = auth()->user();
         $status = $syncService->statusFor($user);
-        $network = Network::status();
+        
+        // Check if NativePHP is available
+        $network = null;
+        $pushToken = null;
+        
+        if (class_exists(\Native\Mobile\Facades\Network::class)) {
+            $network = \Native\Mobile\Facades\Network::status();
+        }
+        
+        if (class_exists(\Native\Mobile\Facades\PushNotifications::class)) {
+            $pushToken = \Native\Mobile\Facades\PushNotifications::getToken();
+        }
 
         return view('mobile.settings', [
-            'pushToken' => PushNotifications::getToken(),
+            'pushToken' => $pushToken,
             'network' => $network,
             'syncStatus' => $status,
         ]);
@@ -25,9 +34,12 @@ class MobileSettingsController extends Controller
 
     public function enrollPush(Request $request)
     {
-        PushNotifications::enroll()->id('user-'.$request->user()->id)->remember();
+        if (class_exists(\Native\Mobile\Facades\PushNotifications::class)) {
+            \Native\Mobile\Facades\PushNotifications::enroll()->id('user-'.$request->user()->id)->remember();
+            return back()->with('status', 'Push enrollment requested.');
+        }
 
-        return back()->with('status', 'Push enrollment requested.');
+        return back()->with('status', 'Push notifications not available (NativePHP not installed).');
     }
 
     public function sync(MobileSyncService $syncService, Request $request)

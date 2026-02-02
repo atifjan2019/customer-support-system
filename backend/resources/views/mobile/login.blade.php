@@ -1,26 +1,42 @@
 @extends('mobile.layout')
 
-@section('title', 'Mobile Login')
+@section('title', 'Sign In')
 
 @section('content')
-    @include('mobile.partials.header', ['label' => 'Secure Login'])
+    @include('mobile.partials.header', ['label' => 'Welcome Back'])
 
-    <h1>Welcome back</h1>
-    <p>Use your support account to sign in and access live tickets.</p>
+    <h1>Sign in to continue</h1>
+    <p>Access your support dashboard and manage tickets on the go.</p>
 
-    <form method="POST" action="{{ route('mobile.login.submit') }}">
+    <form method="POST" action="{{ route('mobile.login.submit') }}" autocomplete="on">
         @csrf
         <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" placeholder="agent@isp.com" value="{{ old('email') }}" />
+            <label for="email">Email Address</label>
+            <input 
+                id="email" 
+                name="email" 
+                type="email" 
+                placeholder="you@company.com" 
+                value="{{ old('email') }}"
+                autocomplete="email"
+                inputmode="email"
+                required
+            />
         </div>
         <div class="field">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" placeholder="••••••••" />
+            <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            />
         </div>
         <div class="actions">
-            <button class="button" type="submit">Sign in</button>
-            <a class="button secondary" href="{{ route('mobile.home') }}">Back</a>
+            <button class="button" type="submit">Sign In</button>
+            <a class="button secondary" href="{{ route('mobile.home') }}">Back to Home</a>
         </div>
     </form>
 @endsection

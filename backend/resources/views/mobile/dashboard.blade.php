@@ -1,48 +1,54 @@
 @extends('mobile.layout')
 
-@section('title', 'Mobile Dashboard')
+@section('title', 'Dashboard')
 
 @section('content')
     @include('mobile.partials.header', ['label' => 'Dashboard'])
 
-    <h1>Today at a glance</h1>
-    <p>Quick snapshot of live metrics pulled from your Laravel data.</p>
+    <h1>Today's Overview</h1>
+    <p>Real-time metrics from your support system.</p>
 
-    <div class="list">
-        <div class="list-item">
-            <strong>Open complaints</strong>
-            <div>{{ $openComplaints }} awaiting response</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px;">
+        <div class="list-item" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: var(--primary);">{{ $openComplaints }}</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Open Complaints</div>
         </div>
-        <div class="list-item">
-            <strong>New leads</strong>
-            <div>{{ $pendingRequests }} pending requests</div>
+        <div class="list-item" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: var(--warning);">{{ $pendingRequests }}</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Pending Leads</div>
         </div>
-        <div class="list-item">
-            <strong>Resolved today</strong>
-            <div>{{ $resolvedToday }} tickets closed</div>
+        <div class="list-item" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: var(--success);">{{ $resolvedToday }}</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Resolved Today</div>
         </div>
-        <div class="list-item">
-            <strong>Total leads</strong>
-            <div>{{ $totalLeads }} in your pipeline</div>
+        <div class="list-item" style="text-align: center; padding: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: #3b82f6;">{{ $totalLeads }}</div>
+            <div style="font-size: 13px; color: var(--text-muted);">Total Leads</div>
         </div>
     </div>
 
-    <h2 style="margin-top: 24px; font-size: 18px;">Recent activity</h2>
+    <h2>Recent Activity</h2>
     <div class="list">
         @forelse ($recentActivity as $lead)
             <div class="list-item">
-                <strong>{{ $lead->name ?? 'Lead' }}</strong>
-                <div>{{ ucfirst($lead->lead_type ?? 'update') }} • {{ ucfirst($lead->status ?? 'open') }}</div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                    <strong>{{ $lead->name ?? 'Lead' }}</strong>
+                    <span class="badge badge-{{ $lead->status === 'resolved' ? 'success' : ($lead->status === 'pending' ? 'warning' : 'primary') }}">{{ ucfirst($lead->status ?? 'open') }}</span>
+                </div>
+                <div class="meta">{{ ucfirst($lead->lead_type ?? 'update') }}</div>
                 @if ($lead->assignedAgent)
-                    <div style="color:#94a3b8; font-size: 12px;">Assigned to {{ $lead->assignedAgent->name }}</div>
+                    <div class="meta">Assigned to {{ $lead->assignedAgent->name }}</div>
                 @endif
             </div>
         @empty
-            <div class="list-item">No recent activity yet.</div>
+            <div class="list-item" style="text-align: center; color: var(--text-muted);">
+                <p>No recent activity yet.</p>
+            </div>
         @endforelse
     </div>
 
     <div class="actions">
-        <a class="button" href="{{ route('mobile.home') }}">Back to home</a>
+        <a class="button" href="{{ route('mobile.leads') }}">View All Leads</a>
+        <a class="button secondary" href="{{ route('mobile.complaints') }}">View Complaints</a>
     </div>
 @endsection
